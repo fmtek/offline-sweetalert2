@@ -1,26 +1,59 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="stylesheet" href="assets/sweetalert2/sweetalert2.min.css">
-        
-        
-        
+        <link rel="stylesheet" href="assets/sweetalert2/sweetalert2.min.css">  
     </head>
 <body>
     <div style="text-align: center;">
         <h1 ></h1> Offline Sweetalert2</h1>
     </div>
-
+    <button onclick="showInput()">Show Input</button><br>
+    <button onclick="showInputLog()">Show Input</button>
+    <div id="log_value">abc</div>
 
 <script src="assets/sweetalert2/sweetalert2.all.min.js"></script>
 <script src="assets/sweetalert2/polyfill.min.js"></script>
 <script>
+    //global var
+    
+    //sample success alert
     Swal.fire({
     title: 'Success!',
     text: 'Congratulations it worked!',
     icon: 'success',
     confirmButtonText: 'Cool'
     })
+    //sample input alert
+    function showInput() {
+
+        const { value: text } = Swal.fire({
+        input: 'text',
+        inputLabel: 'Name',
+        inputPlaceholder: 'Type your input here...',
+        inputAttributes: {
+            'aria-label': 'Type your input here'
+        },
+        inputValidator: function (value) {
+            return new Promise(function (resolve, reject) {
+                // return value;
+                if (value) {
+                  
+                    Swal.fire(value)
+        
+                } else {
+                    resolve('Input cannot be blank');
+                
+                }
+            });
+            
+        },
+        
+        showCancelButton: true
+
+        })     
+       
+    }
+  
 </script>
 </body>
 </html>
