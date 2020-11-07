@@ -1,18 +1,33 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="stylesheet" href="assets/sweetalert2/sweetalert2.min.css">  
+        <link rel="stylesheet" href="assets/sweetalert2/sweetalert2.min.css"> 
+        <link rel="stylesheet" type="text/css" href="assets/datetimepicker/jquery.datetimepicker.css"/>
+    
+        <style>
+            .swal2-overflow {
+              
+            overflow-x: visible;
+            overflow-y: visible;
+           
+
+            }
+        </style> 
     </head>
 <body>
     <div style="text-align: center;">
         <h1> Offline Sweetalert2</h1>
     </div>
     <button type="button" class="swal2-confirm swal2-styled"  onclick="showInput()" aria-label="" style="display: inline-block;">Show Input</button>
-   <br>
+    <br>
+    <button type="button" class="swal2-confirm swal2-styled"  onclick="showDateTimeInput()" aria-label="" style="display: inline-block;">Show Datetime Input</button>
+    <br>
    
 
 <script src="assets/sweetalert2/sweetalert2.all.min.js"></script>
 <script src="assets/sweetalert2/polyfill.min.js"></script>
+<script src="assets/jquery.js"></script>
+<script src="assets/datetimepicker/jquery.datetimepicker.full.js"></script>
 <script>
     
     //sample success alert
@@ -56,9 +71,37 @@
                 Swal.fire(result.value); 
             }
           
-        });  
-       
+        });     
     }
+
+    function showDateTimeInput(){
+        swal.fire({
+            title: "DateTime Input",
+            html: '<input id="datetime_picker" class="swal2-input" name="hrs" autocomplete="off">',
+            focusConfirm: true,
+            showCancelButton: true,
+            customClass: 'swal2-overflow',
+            didOpen: function() {
+                $('#datetime_picker').datetimepicker({
+                    format: 'd/m/Y h:m A',
+                    defaultDate: new Date()
+                });
+                
+            },
+
+            preConfirm: function() {
+                return Promise.resolve($('#datetime_picker').val());
+                
+            }
+        }).then(function(result) {
+            swal.fire({
+            type: 'success',
+            html: 'You entered: <strong>' + result.value + '</strong>'
+            });
+        });
+            
+    }
+    
   
 </script>
 </body>
