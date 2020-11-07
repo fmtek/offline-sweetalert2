@@ -8,8 +8,7 @@
         <h1 ></h1> Offline Sweetalert2</h1>
     </div>
     <button onclick="showInput()">Show Input</button><br>
-    <button onclick="showInputLog()">Show Input</button>
-    <div id="log_value">abc</div>
+   
 
 <script src="assets/sweetalert2/sweetalert2.all.min.js"></script>
 <script src="assets/sweetalert2/polyfill.min.js"></script>
@@ -26,19 +25,20 @@
     //sample input alert
     function showInput() {
 
-        const { value: text } = Swal.fire({
+        Swal.fire({
         input: 'text',
         inputLabel: 'Name',
         inputPlaceholder: 'Type your input here...',
         inputAttributes: {
             'aria-label': 'Type your input here'
         },
+        showCancelButton: true,
         inputValidator: function (value) {
             return new Promise(function (resolve, reject) {
                 // return value;
-                if (value) {
-                  
-                    Swal.fire(value)
+                if (value != null && value !== "") {
+                      
+                    resolve();
         
                 } else {
                     resolve('Input cannot be blank');
@@ -46,11 +46,17 @@
                 }
             });
             
-        },
-        
-        showCancelButton: true
+        }
 
-        })     
+        }).then(function (result) {
+           
+            if(result.isDismissed){
+               Swal.fire("Input was cancelled"); 
+            }else{
+                Swal.fire(result.value); 
+            }
+          
+        });  
        
     }
   
